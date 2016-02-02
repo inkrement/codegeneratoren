@@ -6,6 +6,7 @@
 \usepackage{tikz}
 \usepackage{siunitx}
 \usepackage{pgfplots}
+\usepackage{scrextend}
 \usepackage{hyperref}
 \usepgfplotslibrary{units} % Allows to enter the units nicely
 
@@ -15,6 +16,8 @@
 Sebastian Geiger\\ \small{Twitter: @lanoxx} \\ \small{Email: sbastig@gmx.net}
 \and
 Christian Hotz-Behofsits\\ \small{Twitter: @inkrement} \\ \small{Email: christian.hotz-behofsits@wu.ac.at}
+\and
+Dominik Pichler\\ \small{Twitter: @PicDom} \\ \small{Email: dpichler90@gmail.com}
 }
 
 \lstset{ %
@@ -81,13 +84,14 @@ overview of the most important parts and their functions:
        the execution units can execute the instruction out-of-order. PowerPC 604 uses out-of order execution \cite{powerpc}.
  \item[Register renaming] Register renaming minimizes architectural resource dependencies, namely WAW
        \footnote{\label{footnote-waw}WAW and WAR are abbreviations for data dependencies and are explained in Section \ref{sec:graphs}.}
-       and WAR \footnote{See footnote \ref{footnote-waw}} dependencies. If instructions are executed out-of-order, then it maybe the case
+       and WAR\footref{footnote-waw} dependencies. If instructions are executed out-of-order, then it maybe the case
        that a result needs to be written into a register while an earlier instruction still needs the old value. By renaming the register
        and temporarily storing the new result in a different register the data dependency between those instructions can be broken up. On
        the microarchitectural level \textbf{rename buffers} are used to implement register renaming.
  \item[Precise interrupts] An interrupt is precise if the state of the processor includes the data of all instructions before
        the instruction that caused the interrupt and no data from the instruction causing the interrupt or later instructions. Processors
-       that do not have precise interrupts are quite difficult to program\cite{powerpc}.
+       that do not have precise interrupts are quite difficult to program. A reorder buffer, which kepps track of the instructions order
+       and the state, can be used to implement precise interrupts\cite{powerpc}.
  \item[Reorder buffer] A reorder buffer is used to save the original order and the states of instructions as they are dispatched
        to execution units. Reorder buffers are used to implement prceise interrupts, because they allow the processor to enforce in-order
        completion of instructions even though they maybe executed out-of-order by the execution units.
